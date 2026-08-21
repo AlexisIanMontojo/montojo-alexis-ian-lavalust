@@ -14,7 +14,7 @@ class StudentController extends Controller {
 
     public function index(){
 
-        $_SESSION['student_access'] = false;
+        $_SESSION['student_access'] = true;
         $student = [
             'student_id'  => '2023-0062',
             'name'        => 'Alexis Ian M. Montojo',
