@@ -82,7 +82,7 @@ $autoload['libraries'] = array('session', 'database');
 |
 |	$autoload['helpers'] = array('url', 'file');
 */
-$autoload['helpers'] = array('url', 'debug');
+$autoload['helpers'] = array('url', 'debug', 'form');
 
 /*
 | -------------------------------------------------------------------
@@ -92,7 +92,7 @@ $autoload['helpers'] = array('url', 'debug');
 |
 |	$autoload['models'] = array('model1_model', 'model2_model')
 */
-$autoload['models'] = array('UsersModel');
+$autoload['models'] = array('UsersModel', 'ProductModel');
 
 /*
 | -------------------------------------------------------------------
