@@ -1,11 +1,11 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /**
- * Middleware: AuthMiddleware
+ * Middleware: AdminMiddleware
  * 
  * Automatically generated via CLI.
  */
-class AuthMiddleware
+class AdminMiddleware
 {
     /**
      * Handle the incoming request
@@ -15,8 +15,13 @@ class AuthMiddleware
      */
     public function handle(Closure $next)
     {
-       if (!isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user'])) {
             redirect('/login');
+            return;
+        }
+
+        if ($_SESSION['user']['role'] !== 'admin') {
+            echo "Access Denied. Admins only.";
             return;
         }
 

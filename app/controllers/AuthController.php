@@ -10,6 +10,8 @@ class AuthController extends Controller {
     public function __construct()
     {
         parent::__construct();
+
+        $this->call->model('UsersModel', 'userModel');
     }
     public function login()
     {
@@ -21,35 +23,36 @@ class AuthController extends Controller {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        /*
-         * For this classroom project:
-         * username: admin
-         * password: admin123
-         */
+        $user = $this->userModel->getUserByUsername($username);
 
-        if (
-            $username === 'admin' &&
-            $password === 'admin123'
-        ) {
-
-            $_SESSION['user'] = $username;
-
-            redirect('products');
-
+        // User does not exist or password is incorrect
+        if (!$user || $password !== $user['password']) {
+            $data['error'] = 'Invalid username or password.';
+            $this->call->view('auth/login', $data);
             return;
         }
 
-        $data['error'] = 'Invalid username or password.';
+        // Only ADMIN can log in
+        if ($user['role'] !== 'admin') {
+            $data['error'] = 'Access denied. Only administrators can log in.';
+            $this->call->view('auth/login', $data);
+            return;
+        }
 
-        $this->call->view('auth/login', $data);
+        // Admin login successful
+        $_SESSION['user'] = [
+            'id'       => $user['id'],
+            'username' => $user['username'],
+            'role'     => $user['role']
+        ];
+
+        redirect('/products');
     }
 
     public function logout()
     {
-        unset($_SESSION['user']);
-
         session_destroy();
 
-        redirect('login');
+        redirect('/login');
     }
 }

@@ -47,19 +47,19 @@ $router->get('/products', 'ProductController::index')
     ->middleware('auth');
 
 $router->get('/products/create', 'ProductController::create')
-    ->middleware('auth');
+    ->middleware('admin');
 
 $router->post('/products/store', 'ProductController::store')
-    ->middleware('auth');
+    ->middleware('admin');
 
 $router->get('/products/edit/{id}', 'ProductController::edit')
-    ->middleware('auth');
+    ->middleware('admin');
 
 $router->post('/products/update/{id}', 'ProductController::update')
-    ->middleware('auth');
+    ->middleware('admin');
 
 $router->get('/products/delete/{id}', 'ProductController::delete')
-    ->middleware('auth');
+    ->middleware('admin');
 
 $router->get('/login', 'AuthController::login');
 

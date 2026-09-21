@@ -16,4 +16,16 @@ class UsersModel extends Model {
     {
         parent::__construct();
     }
+    public function getUserByUsername($username)
+    {
+        $users = $this->all();
+
+        foreach ($users as $user) {
+            if ($user['username'] === $username) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
 }
