@@ -21,6 +21,13 @@ class ProductController extends Controller {
         $this->call->view('products/index', $data);
     }
 
+    public function userProducts()
+    {
+        $data['products'] = $this->productModel->getAllProducts();
+
+        $this->call->view('user/products', $data);
+    }
+    
     // CREATE FORM
     public function create()
     {

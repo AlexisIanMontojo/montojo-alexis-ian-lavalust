@@ -45,6 +45,9 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /** @var object $router **/
 $router->get('/products', 'ProductController::index')
     ->middleware('auth');
+    
+$router->get('/user/products', 'ProductController::userProducts')
+    ->middleware('auth');
 
 $router->get('/products/create', 'ProductController::create')
     ->middleware('admin');

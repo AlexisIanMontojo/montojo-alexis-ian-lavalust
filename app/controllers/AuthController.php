@@ -3,10 +3,9 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /**
  * Controller: AuthController
- * 
- * Automatically generated via CLI.
  */
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     public function __construct()
     {
         parent::__construct();
@@ -32,21 +31,29 @@ class AuthController extends Controller {
             return;
         }
 
-        // Only ADMIN can log in
-        if ($user['role'] !== 'admin') {
-            $data['error'] = 'Access denied. Only administrators can log in.';
-            $this->call->view('auth/login', $data);
-            return;
-        }
-
-        // Admin login successful
+        // Save logged-in user information
         $_SESSION['user'] = [
             'id'       => $user['id'],
             'username' => $user['username'],
             'role'     => $user['role']
         ];
 
-        redirect('/products');
+        // Redirect according to role
+        if ($user['role'] === 'admin') {
+            redirect('/products');
+            return;
+        }
+
+        if ($user['role'] === 'user') {
+            redirect('/user/products');
+            return;
+        }
+
+        // Unknown role
+        unset($_SESSION['user']);
+
+        $data['error'] = 'Invalid user role.';
+        $this->call->view('auth/login', $data);
     }
 
     public function logout()
